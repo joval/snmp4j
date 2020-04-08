@@ -25,7 +25,8 @@ import java.util.*;
 
 import org.snmp4j.SNMP4JSettings;
 import org.snmp4j.TransportStateReference;
-import org.snmp4j.log.*;
+import org.snmp4j.log.LogAdapter;
+import org.snmp4j.log.LogFactory;
 import org.snmp4j.asn1.*;
 import org.snmp4j.asn1.BER.*;
 import org.snmp4j.event.*;

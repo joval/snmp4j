@@ -22,15 +22,13 @@ CLASSES=\
 	org.snmp4j.event.UsmUserListener	\
 	org.snmp4j.log.ConsoleLogAdapter	\
 	org.snmp4j.log.ConsoleLogFactory	\
-	org.snmp4j.log.JavaLogAdapter	\
-	org.snmp4j.log.JavaLogFactory	\
-	org.snmp4j.log.Log4jLogAdapter	\
-	org.snmp4j.log.Log4jLogFactory	\
 	org.snmp4j.log.LogAdapter	\
 	org.snmp4j.log.LogFactory	\
 	org.snmp4j.log.LogLevel	\
 	org.snmp4j.log.LogProxy	\
 	org.snmp4j.log.NoLogger	\
+	org.snmp4j.log.Slf4jLogAdapter	\
+	org.snmp4j.log.Slf4jLogFactory	\
 	org.snmp4j.MessageDispatcher	\
 	org.snmp4j.MessageDispatcherImpl	\
 	org.snmp4j.MessageException	\

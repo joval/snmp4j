@@ -91,16 +91,6 @@ public class LogFactory {
   }
 
   /**
-   * Returns the top level logger.
-   * @return
-   *    a LogAdapter instance.
-   * @since 1.7
-   */
-  public LogAdapter getRootLogger() {
-    return NoLogger.instance;
-  }
-
-  /**
    * Gets the logger for the supplied class name.
    *
    * @param className

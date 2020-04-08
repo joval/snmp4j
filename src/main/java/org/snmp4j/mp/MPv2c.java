@@ -27,7 +27,8 @@ import org.snmp4j.smi.OctetString;
 
 import java.io.IOException;
 
-import org.snmp4j.log.*;
+import org.snmp4j.log.LogAdapter;
+import org.snmp4j.log.LogFactory;
 import org.snmp4j.asn1.BER;
 import org.snmp4j.security.SecurityModel;
 import org.snmp4j.asn1.BER.MutableByte;

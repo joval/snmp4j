@@ -20,7 +20,8 @@
 package org.snmp4j.security;
 
 import org.snmp4j.smi.OID;
-import org.snmp4j.log.*;
+import org.snmp4j.log.LogAdapter;
+import org.snmp4j.log.LogFactory;
 
 import javax.crypto.NoSuchPaddingException;
 import javax.crypto.spec.SecretKeySpec;

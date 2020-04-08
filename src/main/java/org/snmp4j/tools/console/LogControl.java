@@ -25,7 +25,7 @@ import java.util.*;
 
 import org.snmp4j.*;
 import org.snmp4j.event.*;
-import org.snmp4j.log.*;
+import org.snmp4j.log.LogLevel;
 import org.snmp4j.smi.*;
 import org.snmp4j.transport.*;
 import org.snmp4j.util.*;
@@ -214,8 +214,8 @@ public class LogControl {
         (!respPDU.get(0).isException()) &&
         (!respPDU.get(1).isException())) {
       PDU resp = response.getResponse();
-      LogLevel setLevel = new LogLevel(resp.get(0).getVariable().toInt());
-      LogLevel effectiveLevel = new LogLevel(resp.get(1).getVariable().toInt());
+      LogLevel setLevel = LogLevel.toLevel(resp.get(0).getVariable().toInt());
+      LogLevel effectiveLevel = LogLevel.toLevel(resp.get(1).getVariable().toInt());
       System.out.println("Set logger '"+logger+"' level to "+newLevel+
                          ". Now levels are "+setLevel+" (configured) and "+
                          effectiveLevel+" (effective).");
@@ -281,9 +281,9 @@ public class LogControl {
         if (rowStatus == 1) {
           OctetString name = new OctetString();
           name.fromSubIndex(event.getIndex(), true);
-          LogLevel level = new LogLevel(event.getColumns()[0].getVariable().
+          LogLevel level = LogLevel.toLevel(event.getColumns()[0].getVariable().
                                         toInt());
-          LogLevel effectiveLevel = new LogLevel(event.getColumns()[1].
+          LogLevel effectiveLevel = LogLevel.toLevel(event.getColumns()[1].
                                                  getVariable().toInt());
           System.out.println(name.toString() + "=" + level + "(" +
                              effectiveLevel + ")");

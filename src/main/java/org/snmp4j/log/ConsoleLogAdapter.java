@@ -39,107 +39,6 @@ public class ConsoleLogAdapter implements LogAdapter {
   public ConsoleLogAdapter() {
   }
 
-  /**
-   * Logs a debug message.
-   *
-   * @param message the message to log.
-   */
-  public void debug(Serializable message) {
-    if (debugEnabled) {
-      System.out.println(message.toString());
-    }
-  }
-
-  /**
-   * Logs an error message.
-   *
-   * @param message the message to log.
-   */
-  public void error(Serializable message) {
-    System.err.println(message.toString());
-  }
-
-  /**
-   * Logs an error message.
-   *
-   * @param message the message to log.
-   * @param throwable the exception that caused to error.
-   */
-  public void error(CharSequence message, Throwable throwable) {
-    System.err.println(message.toString());
-  }
-
-  /**
-   * Logs a fatal message.
-   *
-   * @param message the message to log.
-   */
-  public void fatal(Object message) {
-    System.err.println(message.toString());
-  }
-
-  /**
-   * Logs a fatal message.
-   *
-   * @param message the message to log.
-   * @param throwable the exception that caused to error.
-   */
-  public void fatal(CharSequence message, Throwable throwable) {
-    System.err.println(message.toString());
-  }
-
-  /**
-   * Logs an informational message.
-   *
-   * @param message the message to log.
-   */
-  public void info(CharSequence message) {
-    if (infoEnabled) {
-      System.out.println(message.toString());
-    }
-  }
-
-  /**
-   * Checks whether DEBUG level logging is activated for this log adapter.
-   *
-   * @return <code>true</code> if logging is enabled or <code>false</code>
-   *   otherwise.
-   */
-  public boolean isDebugEnabled() {
-    return debugEnabled;
-  }
-
-  /**
-   * Checks whether INFO level logging is activated for this log adapter.
-   *
-   * @return <code>true</code> if logging is enabled or <code>false</code>
-   *   otherwise.
-   */
-  public boolean isInfoEnabled() {
-    return infoEnabled;
-  }
-
-  /**
-   * Checks whether WARN level logging is activated for this log adapter.
-   *
-   * @return <code>true</code> if logging is enabled or <code>false</code>
-   *   otherwise.
-   */
-  public boolean isWarnEnabled() {
-    return warnEnabled;
-  }
-
-  /**
-   * Logs an warning message.
-   *
-   * @param message the message to log.
-   */
-  public void warn(Serializable message) {
-    if (warnEnabled) {
-      System.out.println(message.toString());
-    }
-  }
-
   public static void setDebugEnabled(boolean isDebugEnabled) {
     debugEnabled = isDebugEnabled;
   }
@@ -156,27 +55,23 @@ public class ConsoleLogAdapter implements LogAdapter {
     debugEnabled = false;
     warnEnabled = false;
     infoEnabled = false;
-    switch (level.getLevel()) {
-      case LogLevel.LEVEL_TRACE:
-      case LogLevel.LEVEL_DEBUG:
-      case LogLevel.LEVEL_ALL:
+    switch (level) {
+      case TRACE:
+      case DEBUG:
+      case ALL:
         debugEnabled = true;
         warnEnabled = true;
         infoEnabled = true;
         break;
-      case LogLevel.LEVEL_INFO:
+      case INFO:
         infoEnabled = true;
         warnEnabled = true;
         break;
-      case LogLevel.LEVEL_WARN:
+      case WARN:
         warnEnabled = true;
         break;
       default:
     }
-  }
-
-  public String getName() {
-    return "";
   }
 
   public LogLevel getLogLevel() {
@@ -192,11 +87,55 @@ public class ConsoleLogAdapter implements LogAdapter {
     return LogLevel.OFF;
   }
 
-  public LogLevel getEffectiveLogLevel() {
-    return getLogLevel();
+  // Implement LogAdapter
+
+  public void debug(Serializable message) {
+    if (debugEnabled) {
+      System.out.println(message.toString());
+    }
   }
 
-  public Iterator getLogHandler() {
-    return Collections.EMPTY_LIST.iterator();
+  public void error(Serializable message) {
+    System.err.println(message.toString());
+  }
+
+  public void error(CharSequence message, Throwable throwable) {
+    System.err.println(message.toString());
+  }
+
+  public void fatal(Object message) {
+    System.err.println(message.toString());
+  }
+
+  public void fatal(CharSequence message, Throwable throwable) {
+    System.err.println(message.toString());
+  }
+
+  public void info(CharSequence message) {
+    if (infoEnabled) {
+      System.out.println(message.toString());
+    }
+  }
+
+  public boolean isDebugEnabled() {
+    return debugEnabled;
+  }
+
+  public boolean isInfoEnabled() {
+    return infoEnabled;
+  }
+
+  public boolean isWarnEnabled() {
+    return warnEnabled;
+  }
+
+  public void warn(Serializable message) {
+    if (warnEnabled) {
+      System.out.println(message.toString());
+    }
+  }
+
+  public String getName() {
+    return "";
   }
 }

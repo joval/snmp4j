@@ -111,43 +111,9 @@ public interface LogAdapter {
   void fatal(CharSequence message, Throwable throwable);
 
   /**
-   * Sets the log level for this log adapter (if applicable).
-   * @param level
-   *    a LogLevel instance.
-   * @since 1.6.1
-   */
-  void setLogLevel(LogLevel level);
-
-  /**
-   * Returns the log level defined for this log adapter.
-   * @return
-   *    a LogLevel instance.
-   * @since 1.6.1
-   */
-  LogLevel getLogLevel();
-
-  /**
-   * Returns the log level that is effective for this log adapter.
-   * The effective log level is the first log level different from
-   * {@link LogLevel#NONE} to the root.
-   * @return
-   *    a LogLevel different than {@link LogLevel#NONE}.
-   * @since 1.6.1
-   */
-  LogLevel getEffectiveLogLevel();
-
-  /**
    * Returns the name of the logger.
    * @return
    *   the name of the logger.
    */
   String getName();
-
-  /**
-   * Returns the log handlers associated with this logger.
-   * @return
-   *    an Iterator of log system dependent log handlers.
-   * @since 1.6.1
-   */
-  Iterator getLogHandler();
 }

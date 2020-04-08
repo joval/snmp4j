@@ -24,7 +24,8 @@ import java.net.*;
 import java.nio.ByteBuffer;
 
 import org.snmp4j.TransportStateReference;
-import org.snmp4j.log.*;
+import org.snmp4j.log.LogAdapter;
+import org.snmp4j.log.LogFactory;
 import org.snmp4j.security.SecurityLevel;
 import org.snmp4j.smi.*;
 import org.snmp4j.SNMP4JSettings;

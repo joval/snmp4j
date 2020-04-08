@@ -25,7 +25,8 @@ package org.snmp4j.security;
 import java.util.Random;
 import java.security.SecureRandom;
 import java.security.NoSuchAlgorithmException;
-import org.snmp4j.log.*;
+import org.snmp4j.log.LogAdapter;
+import org.snmp4j.log.LogFactory;
 
 /**
  * Class that holds a 64 bit salt value for crypto operations.

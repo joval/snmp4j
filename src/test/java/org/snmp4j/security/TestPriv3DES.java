@@ -24,7 +24,6 @@ import org.apache.log4j.*;
 import junit.framework.*;
 import org.snmp4j.smi.OctetString;
 import org.snmp4j.log.LogFactory;
-import org.snmp4j.log.JavaLogFactory;
 import org.snmp4j.asn1.BER;
 
 public class TestPriv3DES

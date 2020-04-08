@@ -23,7 +23,8 @@ import java.io.Serializable;
 import java.util.*;
 
 import org.snmp4j.smi.OctetString;
-import org.snmp4j.log.*;
+import org.snmp4j.log.LogAdapter;
+import org.snmp4j.log.LogFactory;
 
 /**
  * The <code>UsmUserTable</code> class stores USM user

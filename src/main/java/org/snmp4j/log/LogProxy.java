@@ -44,6 +44,26 @@ public class LogProxy implements LogAdapter {
     this.logger = logger;
   }
 
+  /**
+   * Gets the proxied logger.
+   * @return
+   *    a LogAdapter the actually logs the messages.
+   */
+  public LogAdapter getLogger() {
+    return logger;
+  }
+
+  /**
+   * Sets the logger that logs the log messages logged with this proxy.
+   * @param logger
+   *    a LogAdapter.
+   */
+  public void setLogger(LogAdapter logger) {
+    this.logger = logger;
+  }
+
+  // Implement LogAdapter
+
   public void debug(Serializable message) {
     if (logger != null) {
       logger.debug(message);
@@ -74,27 +94,6 @@ public class LogProxy implements LogAdapter {
     }
   }
 
-  public LogLevel getEffectiveLogLevel() {
-    if (logger != null) {
-      return logger.getEffectiveLogLevel();
-    }
-    return LogLevel.OFF;
-  }
-
-  public Iterator getLogHandler() {
-    if (logger != null) {
-      return logger.getLogHandler();
-    }
-    return Collections.EMPTY_LIST.iterator();
-  }
-
-  public LogLevel getLogLevel() {
-    if (logger != null) {
-      return logger.getLogLevel();
-    }
-    return LogLevel.OFF;
-  }
-
   public String getName() {
     if (logger != null) {
       logger.getName();
@@ -120,33 +119,9 @@ public class LogProxy implements LogAdapter {
     return (logger != null) && logger.isWarnEnabled();
   }
 
-  public void setLogLevel(LogLevel level) {
-    if (logger != null) {
-      logger.setLogLevel(level);
-    }
-  }
-
   public void warn(Serializable message) {
     if (logger != null) {
       logger.warn(message);
     }
-  }
-
-  /**
-   * Gets the proxied logger.
-   * @return
-   *    a LogAdapter the actually logs the messages.
-   */
-  public LogAdapter getLogger() {
-    return logger;
-  }
-
-  /**
-   * Sets the logger that logs the log messages logged with this proxy.
-   * @param logger
-   *    a LogAdapter.
-   */
-  public void setLogger(LogAdapter logger) {
-    this.logger = logger;
   }
 }

@@ -45,13 +45,6 @@ import org.snmp4j.mp.MPv2c;
 
 public class MultiThreadedTrapReceiver implements CommandResponder {
 
-  // initialize Log4J logging
-/*
-  static {
-    LogFactory.setLogFactory(new Log4jLogFactory());
-    BER.setCheckSequenceLength(false);
-  }
-*/
   private MultiThreadedMessageDispatcher dispatcher;
   private Snmp snmp = null;
   private Address listenAddress;

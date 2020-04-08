@@ -21,11 +21,14 @@ package org.snmp4j.tools.console;
 
 import java.io.*;
 import java.util.*;
+import java.util.logging.*;
 
 import org.snmp4j.*;
 import org.snmp4j.asn1.*;
 import org.snmp4j.event.*;
-import org.snmp4j.log.*;
+import org.snmp4j.log.LogFactory;
+import org.snmp4j.log.LogLevel;
+import org.snmp4j.log.Slf4jLogFactory;
 import org.snmp4j.mp.*;
 import org.snmp4j.security.*;
 import org.snmp4j.smi.*;
@@ -45,8 +48,12 @@ public class SnmpRequest implements CommandResponder, PDUFactory {
 
   // initialize Java logging
   static {
-    LogFactory.setLogFactory(new Log4jLogFactory());
-    org.apache.log4j.BasicConfigurator.configure();
+    LogFactory.setLogFactory(new Slf4jLogFactory());
+    try {
+      LogManager.getLogManager().readConfiguration(new ByteArrayInputStream("java.util.logging.handlers=".getBytes()));
+    } catch (IOException e) {
+      throw new RuntimeException(e);
+    }
     BER.setCheckSequenceLength(false);
   }
 
@@ -636,8 +643,26 @@ public class SnmpRequest implements CommandResponder, PDUFactory {
       }
       else if (args[i].equals("-d")) {
         String debugOption = nextOption(args, i++);
-        LogFactory.getLogFactory().getRootLogger().setLogLevel(
-            LogLevel.toLevel(debugOption));
+        Logger global = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
+        switch(LogLevel.toLevel(debugOption)) {
+          case OFF:
+            global.setLevel(Level.OFF);
+            break;
+          case ERROR:
+            global.setLevel(Level.SEVERE);
+            break;
+          case WARN:
+            global.setLevel(Level.WARNING);
+            break;
+          case INFO:
+            global.setLevel(Level.INFO);
+            break;
+          case DEBUG:
+            global.setLevel(Level.FINEST);
+            break;
+          default:
+            throw new IllegalArgumentException(debugOption);
+        }
       }
       else if (args[i].equals("-l")) {
         localEngineID = createOctetString(nextOption(args, i++));
@@ -838,7 +863,7 @@ public class SnmpRequest implements CommandResponder, PDUFactory {
         "                        or TRAP PDU. The default is 1.3.6.1.6.3.1.1.5.1.",
         "  -Cu upTime            Sets the sysUpTime field of an INFORM, TRAP, or",
         "                        V1TRAP PDU.",
-        "  -d  debugLevel        Sets the global debug level for Log4J logging output.",
+        "  -d  debugLevel        Sets the global debug level for SLF4J logging output.",
         "                        Valid values are OFF, ERROR, WARN, INFO, and DEBUG.",
         "  -e  engineID          Sets the authoritative engine ID of the command",
         "                        responder used for SNMPv3 request messages. If not",
@@ -1226,12 +1251,6 @@ public class SnmpRequest implements CommandResponder, PDUFactory {
 
   public static void main(String[] args) {
     try {
-/* Initialize Log4J logging:
-      if (System.getProperty("log4j.configuration") == null) {
-        BasicConfigurator.configure();
-      }
-      Logger.getRootLogger().setLevel(Level.OFF);
-*/
       SnmpRequest snmpRequest = new SnmpRequest(args);
       if (snmpRequest.operation == SNAPSHOT_DUMP) {
         snmpRequest.dumpSnapshot();

@@ -1,6 +1,6 @@
 /*_############################################################################
   _## 
-  _##  SNMP4J 2 - Log4jLogFactory.java  
+  _##  SNMP4J 2 - Slf4jLogFactory.java  
   _## 
   _##  Copyright (C) 2003-2016  Frank Fock and Jochen Katz (SNMP4J.org)
   _##  
@@ -19,46 +19,46 @@
   _##########################################################################*/
 package org.snmp4j.log;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import java.util.Iterator;
 import java.util.Collections;
+import java.util.TreeMap;
 import java.util.ArrayList;
 
 /**
- * The <code>Log4jLogFactory</code> implements a SNMP4J LogFactory for
- * Log4J. In order to use Log4J for logging SNMP4J log messages the
+ * The <code>Slf4jLogFactory</code> implements a SNMP4J LogFactory for
+ * SLF4J. In order to use SLF4J for logging SNMP4J log messages the
  * static {@link LogFactory#setLogFactory} method has to be used before
- * any SNMP4J class is referenced or instantiated.
+ * any (other) SNMP4J class is referenced or instantiated.
  *
  * @author Frank Fock
  * @version 1.6.1
  * @since 1.2.1
  */
-public class Log4jLogFactory extends LogFactory {
+public class Slf4jLogFactory extends LogFactory {
+  private TreeMap<String, LogAdapter> loggers;
 
-  public Log4jLogFactory() {
+  public Slf4jLogFactory() {
+    loggers = new TreeMap<String, LogAdapter>();
   }
 
   protected LogAdapter createLogger(Class c) {
-    return new Log4jLogAdapter(Logger.getLogger(c));
+    return createLogger(c.getName());
   }
 
-  protected LogAdapter createLogger(String className) {
-    return new Log4jLogAdapter(Logger.getLogger(className));
-  }
-
-  public LogAdapter getRootLogger() {
-    return new Log4jLogAdapter(Logger.getRootLogger());
+  protected synchronized LogAdapter createLogger(String className) {
+    if (loggers.containsKey(className)) {
+      return loggers.get(className);
+    } else {
+      LogAdapter adapter = new Slf4jLogAdapter(LoggerFactory.getLogger(className));
+      loggers.put(adapter.getName(), adapter);
+      return adapter;
+    }
   }
 
   @SuppressWarnings("unchecked")
   public Iterator loggers() {
-    ArrayList<Logger> l = Collections.<Logger>list(Logger.getRootLogger().getLoggerRepository().getCurrentLoggers());
-    ArrayList<Log4jLogAdapter> la = new ArrayList<Log4jLogAdapter>(l.size());
-    for (Logger logger : l) {
-      la.add(new Log4jLogAdapter(logger));
-    }
-    Collections.sort(la);
-    return la.iterator();
+    return loggers.values().iterator();
   }
 }
