@@ -38,11 +38,11 @@ PACKAGEDIRS=$(subst .,/,$(PACKAGES))
 
 VERSION=2.5.6
 BASENAME=snmp4j
-JAR=$(BASENAME)-$(VERSION).jar
+TARGET=$(BASENAME)-$(VERSION).jar
 
-all: $(JAR)
+all: $(TARGET)
 
-$(JAR): classes resources
+$(TARGET): classes resources
 	$(JAR) cvf $@ -C $(BUILD)/ .
 
 javadocs:
@@ -50,14 +50,14 @@ javadocs:
 	$(JAVA_HOME)/bin/javadoc -d $(DOCS) -classpath $(CLASSPATH) $(PACKAGES)
 
 clean:
-	rm -f $(JAR)
+	rm -f $(TARGET)
 	rm -rf $(BUILD)
 
-install: $(JAR)
+install: $(TARGET)
 	cp $< $(TOP)/jOVAL-Commercial/components/provider/discovery/rsrc/lib
 
 resources:
-	cp -R mib $(BUILD)
+	cp -R mibs $(BUILD)
 
 classes: classdirs $(CLASS_FILES)
 
