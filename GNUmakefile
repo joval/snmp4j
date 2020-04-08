@@ -28,6 +28,7 @@ BUILD=build
 SRC=src/main/java
 DOCS=docs
 CLASSPATH="$(CLASSLIB)$(CLN)$(LIB)$(CLN)$(SRC)"
+RUNTIMECP="$(CLASSLIB)$(CLN)$(LIB)$(CLN)$(BUILD)"
 CWD=$(shell pwd)
 
 include classes.mk
@@ -44,6 +45,9 @@ all: $(TARGET)
 
 $(TARGET): classes resources
 	$(JAR) cvf $@ -C $(BUILD)/ .
+
+test:
+	$(JAVA) -classpath $(RUNTIMECP) org.snmp4j.tools.console.SnmpRequest
 
 javadocs:
 	mkdir -p $(DOCS)

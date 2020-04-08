@@ -1,2 +1,4 @@
 build/
+docs/
+.DS_Store
 snmp4j-*.jar
